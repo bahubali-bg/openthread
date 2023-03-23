@@ -299,6 +299,16 @@ if(OT_MTD)
     include(mtd.cmake)
 endif()
 
+if(OT_LIB_SHARED)
+    if(OT_FTD)
+        include(ftd-shared.cmake)
+    endif()
+
+    if(OT_MTD)
+        include(mtd-shared.cmake)
+    endif()
+endif()
+
 if(OT_RCP)
     include(radio.cmake)
     if (OT_APP_CLI)

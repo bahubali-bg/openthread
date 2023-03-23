@@ -157,17 +157,30 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND NOT OT_TARGET_OPENWRT)
     target_link_libraries(openthread-posix PRIVATE anl)
 endif()
 
-target_compile_definitions(openthread-posix
-    PUBLIC
-        ${OT_PUBLIC_DEFINES}
-    PRIVATE
-        OPENTHREAD_FTD=1
-        OPENTHREAD_MTD=0
-)
-
-target_compile_options(openthread-posix PRIVATE
-    ${OT_CFLAGS}
-)
+if(OT_LIB_SHARED)
+    target_compile_definitions(openthread-posix
+        PUBLIC
+            ${OT_PUBLIC_DEFINES}
+        PRIVATE
+            OPENTHREAD_FTD=1
+            OPENTHREAD_MTD=0
+            OPENTHREAD_DISABLE_SYSLOG=1
+    )
+    target_compile_options(openthread-posix PRIVATE
+        ${OT_SHARED_CFLAGS}
+    )
+else()
+    target_compile_definitions(openthread-posix
+        PUBLIC
+            ${OT_PUBLIC_DEFINES}
+        PRIVATE
+            OPENTHREAD_FTD=1
+            OPENTHREAD_MTD=0
+    )
+    target_compile_options(openthread-posix PRIVATE
+        ${OT_CFLAGS}
+    )
+endif()
 
 target_include_directories(openthread-posix PRIVATE
     ${OT_PUBLIC_INCLUDES}

@@ -93,6 +93,13 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "(Apple)?[Cc]lang")
         $<$<COMPILE_LANGUAGE:C>:${OT_CFLAGS} -Wall -Wextra -Wshadow>
         $<$<COMPILE_LANGUAGE:CXX>:${OT_CFLAGS} -Wall -Wextra -Wshadow -Wno-c++14-compat -fno-exceptions>
     )
+
+    if(OT_LIB_SHARED)
+        set(OT_SHARED_CFLAGS
+            $<$<COMPILE_LANGUAGE:C>:${OT_CFLAGS} -fPIC -Wall -Wextra -Wshadow>
+            $<$<COMPILE_LANGUAGE:CXX>:${OT_CFLAGS} -fPIC -Wall -Wextra -Wshadow -Wno-c++14-compat -fno-exceptions>
+        )
+    endif()
 endif()
 
 set(OT_PACKAGE_NAME "OPENTHREAD" CACHE STRING "OpenThread Package Name")
